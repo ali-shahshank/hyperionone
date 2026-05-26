@@ -1,176 +1,136 @@
 'use client';
-import { useState } from 'react';
-import {
-  AppBar,
-  Toolbar,
-  Box,
-  IconButton,
-  Drawer,
-  List,
-  ListItem,
-  useMediaQuery,
-  useTheme,
-  Button,
-  Typography,
-} from '@mui/material';
+import * as React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import CloseIcon from '@mui/icons-material/Close';
-import Link from 'next/link';
-import { TertiaryButton } from './tertiary-button';
-import { SecondaryButton } from './secondary-button';
+import Container from '@mui/material/Container';
+import Button from '@mui/material/Button';
+import MenuItem from '@mui/material/MenuItem';
 
-export default function Nav() {
-  const [drawerOpen, setDrawerOpen] = useState(false);
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+const pages = ['Products', 'Pricing', 'Blog'];
 
-  const pages = [
-    { name: 'Product', href: '/' },
-    { name: 'Blog', href: '/blog' },
-    { name: 'Resources', href: '/resources', icon: <ArrowDropDownIcon /> },
-  ];
+function ResponsiveAppBar() {
+  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
+    null,
+  );
+
+  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElNav(event.currentTarget);
+  };
+
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
 
   return (
-    <>
-      <AppBar
-        position="fixed"
-        elevation={0}
-        sx={{
-          bgcolor: 'transparent',
-          borderBottom: '1px solid rgba(255,255,255,0.08)',
-        }}
-      >
+    <AppBar
+      position="static"
+      sx={{ bgcolor: 'transparent', boxShadow: 'none' }}
+    >
+      <Container maxWidth="xl">
         <Toolbar
-          sx={{
-            px: { xs: 2, md: 3 },
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
+          disableGutters
+          sx={{ display: 'flex', justifyContent: 'space-between' }}
         >
-          {/* Logo */}
-          <Link
+          <Typography
+            variant="h6"
+            noWrap
+            component="a"
             href="/"
-            style={{ display: 'flex', alignItems: 'center' }}
+            sx={{
+              mr: 0,
+              display: 'flex',
+              fontWeight: 500,
+              letterSpacing: '0rem',
+              color: 'black',
+              textDecoration: 'none',
+            }}
           >
-            <Typography sx={{ fontSize: '24px', color: 'black' }}>
-              Logo
-            </Typography>
-          </Link>
-
-          {/* Desktop Nav */}
-          {!isMobile && (
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            Hyperion
+          </Typography>
+          {/* Nav Links */}
+          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+            {pages.map((page) => (
               <Button
-                variant="text"
+                key={page}
+                onClick={handleCloseNavMenu}
                 sx={{
+                  my: 2,
                   color: 'black',
-                  borderRadius: '24px',
-                  '&:hover': { backgroundColor: 'rgba(0,0,0,0.05)' },
+                  display: 'block',
                 }}
-                href="/sign-in"
               >
-                Sign-in
+                {page}
               </Button>
-              <Button
-                variant="outlined"
-                sx={{
-                  color: 'black',
-                  borderColor: 'black',
-                  borderRadius: '24px',
-                  '&:hover': {
-                    backgroundColor: 'black',
-                    color: 'white',
-                  },
-                }}
-                href="/sign-up"
-              >
-                Get Started
-              </Button>
-            </Box>
-          )}
-
-          {/* Mobile Hamburger */}
-          {isMobile && (
+            ))}
+          </Box>
+          {/* Nav Buttons */}
+          <Box sx={{ gap: 1, display: { xs: 'none', md: 'flex' } }}>
+            <Button
+              variant="text"
+              sx={{ color: 'black', borderRadius: '24px' }}
+            >
+              Sign-In
+            </Button>
+            <Button
+              variant="outlined"
+              sx={{
+                color: 'black',
+                borderColor: 'black',
+                borderRadius: '24px',
+              }}
+            >
+              Get Started
+            </Button>
+          </Box>
+          {/* Mobile Menu */}
+          <Box
+            sx={{
+              display: { xs: 'flex', md: 'none', bgcolor: 'black' },
+            }}
+          >
             <IconButton
-              onClick={() => setDrawerOpen(true)}
-              sx={{ color: '#ffffff' }}
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleOpenNavMenu}
             >
-              <MenuIcon />
+              <MenuIcon sx={{ color: 'black' }} />
             </IconButton>
-          )}
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
+              sx={{ display: { xs: 'block', md: 'none' } }}
+            >
+              {pages.map((page) => (
+                <MenuItem
+                  key={page}
+                  onClick={handleCloseNavMenu}
+                >
+                  <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
         </Toolbar>
-      </AppBar>
-
-      {/* Mobile Drawer */}
-      <Drawer
-        anchor="right"
-        open={drawerOpen}
-        onClose={() => setDrawerOpen(false)}
-        sx={{
-          bgcolor: '#000000',
-          width: 280,
-          borderLeft: '1px solid rgba(255,255,255,0.08)',
-        }}
-      >
-        <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 2 }}>
-          <IconButton
-            onClick={() => setDrawerOpen(false)}
-            sx={{ color: '#ffffff' }}
-          >
-            <CloseIcon />
-          </IconButton>
-        </Box>
-
-        <List sx={{ px: 2, display: 'flex', flexDirection: 'column', gap: 2 }}>
-          <ListItem disablePadding>
-            <Link
-              href="/sign-in"
-              style={{ width: '100%', textDecoration: 'none' }}
-              onClick={() => setDrawerOpen(false)}
-            >
-              <TertiaryButton
-                label="Sign In"
-                fullWidth
-                sx={{
-                  color: 'rgba(255,255,255,0.6)',
-                  justifyContent: 'flex-start',
-                  '&:hover': {
-                    color: '#ffffff',
-                    backgroundColor: 'rgba(255,255,255,0.05)',
-                  },
-                }}
-              />
-            </Link>
-          </ListItem>
-
-          <ListItem disablePadding>
-            <Link
-              href="/sign-up"
-              style={{ width: '100%', textDecoration: 'none' }}
-              onClick={() => setDrawerOpen(false)}
-            >
-              <SecondaryButton
-                label="Get Started"
-                fullWidth
-                sx={{
-                  color: '#ffffff',
-                  borderColor: 'rgba(255,255,255,0.5)',
-                  borderRadius: '999px',
-                  '&:hover': {
-                    borderColor: '#ffffff',
-                    backgroundColor: 'rgba(255,255,255,0.05)',
-                  },
-                }}
-              />
-            </Link>
-          </ListItem>
-        </List>
-      </Drawer>
-
-      {/* Toolbar spacer */}
-      <Toolbar sx={{ height: 64 }} />
-    </>
+      </Container>
+    </AppBar>
   );
 }
+export default ResponsiveAppBar;
