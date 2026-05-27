@@ -16,7 +16,7 @@ import AppDrawer from './drawer';
 
 export interface Page {
   title: string;
-  Icon: React.ElementType; // Component type, not instantiated element
+  Icon: React.ElementType;
 }
 
 const pages: Page[] = [
