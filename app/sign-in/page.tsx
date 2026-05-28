@@ -1,4 +1,5 @@
 'use client';
+
 import React from 'react';
 import Nav from '@/components/Nav';
 import Box from '@mui/material/Box';
@@ -14,14 +15,38 @@ import IconButton from '@mui/material/IconButton';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Divider from '@mui/material/Divider';
-
+import HelperText from '@mui/material/FormHelperText';
 import Button from '@mui/material/Button';
+import { useState, useTransition } from 'react';
+import { signInWithEmail, signInWithGoogle } from './actions';
+import Alert from '@mui/material/Alert';
 
 const page = () => {
+  const [error, setError] = useState<string | null>(null);
+  const [isPending, startTransition] = useTransition();
+
+  const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError(null);
+    const formData = new FormData(e.currentTarget);
+    startTransition(async () => {
+      const result = await signInWithEmail(formData);
+      if (result?.error) setError(result.error);
+    });
+  };
+
+  const handleGoogle = () => {
+    startTransition(async () => {
+      const result = await signInWithGoogle();
+      if (result?.error) setError(result.error);
+    });
+  };
+
+  {
+    /* Password Form-field Visibility */
+  }
   const [showPassword, setShowPassword] = React.useState(false);
-
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>,
   ) => {
@@ -38,14 +63,14 @@ const page = () => {
       <Nav />
       <Box
         sx={{
-          p: 3,
+          p: { xs: 2, md: 3 },
           m: 0,
           gap: 3,
           display: 'flex',
           flexDirection: { xs: 'column', md: 'row' },
           justifyContent: 'center',
           alignItems: 'center',
-          bgcolor: 'black',
+
           height: '728px',
           width: '100%',
         }}
@@ -53,22 +78,28 @@ const page = () => {
         <Container
           sx={{
             height: '100%',
-            maxWidth: '600px',
+            width: { xs: '100%', md: '50%' },
             m: 0,
             p: 3,
             bgcolor: 'white',
             borderRadius: '16px',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
         >
           {/* Sign In Form */}
           <Box
             component="form"
+            onSubmit={handleSubmit}
             sx={{
               gap: 3,
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
               alignItems: 'center',
+              width: '100%',
             }}
           >
             <Stack
@@ -90,14 +121,25 @@ const page = () => {
                 Please sign-in to your account.
               </Typography>
             </Stack>
+            {error && (
+              <Alert
+                severity="error"
+                sx={{ width: '100%' }}
+              >
+                {error}
+              </Alert>
+            )}
             <Stack
               sx={{ width: '100%' }}
               spacing={2}
             >
               <Button
                 variant="outlined"
+                onClick={handleGoogle}
+                disabled={isPending}
                 sx={{
                   borderRadius: 10,
+                  height: '48px',
                   width: '100%',
                   borderColor: 'black',
                   color: 'black',
@@ -106,6 +148,22 @@ const page = () => {
                 size="large"
               >
                 Continue With Google
+              </Button>
+              <Button
+                variant="contained"
+                disabled={isPending}
+                sx={{
+                  backgroundColor: 'black',
+                  borderRadius: 10,
+                  height: '48px',
+                  width: '100%',
+                  borderColor: 'black',
+                  color: 'white',
+                  '&:hover': { bgcolor: 'rgba(0,0,0,3)' },
+                }}
+                size="large"
+              >
+                Continue With Apple
               </Button>
               <Box
                 sx={{
@@ -125,19 +183,15 @@ const page = () => {
               <TextField
                 required
                 id="outlined-required"
-                label="Name"
-                placeholder="John Doe"
-              />
-              <TextField
-                required
-                id="outlined-required"
                 label="Email"
                 placeholder="jdoe@example.com"
+                disabled={isPending}
               />
               {/* Password Field */}
               <FormControl
                 sx={{ m: 1, width: '100%' }}
                 variant="outlined"
+                required
               >
                 <InputLabel htmlFor="outlined-adornment-password">
                   Password
@@ -145,6 +199,7 @@ const page = () => {
                 <OutlinedInput
                   id="outlined-adornment-password"
                   type={showPassword ? 'text' : 'password'}
+                  disabled={isPending}
                   endAdornment={
                     <InputAdornment position="end">
                       <IconButton
@@ -164,13 +219,26 @@ const page = () => {
                   }
                   label="Password"
                 />
+                <HelperText>
+                  <a
+                    href="#"
+                    style={{
+                      textDecoration: 'underline',
+                      color: 'inherit',
+                    }}
+                  >
+                    Forgot password?
+                  </a>
+                </HelperText>
               </FormControl>
             </Stack>
             <Button
+              type="submit"
               variant="contained"
               size="large"
               sx={{
                 borderRadius: 10,
+                height: '48px',
                 width: '100%',
                 bgcolor: 'black',
                 '&:hover': {
@@ -178,8 +246,23 @@ const page = () => {
                 },
               }}
             >
-              Sign In
+              {isPending ? 'Signing in...' : 'Sign In'}
             </Button>
+          </Box>
+          <Box
+            sx={{
+              mt: 3,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Typography
+              variant="body2"
+              color="text.secondary"
+            >
+              Don't have an account? <a href="#">Sign up</a>
+            </Typography>
           </Box>
         </Container>
         <Container
