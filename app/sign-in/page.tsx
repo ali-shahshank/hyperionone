@@ -1,5 +1,6 @@
 'use client';
-
+import '../globals.css';
+import { useTheme } from '@mui/material/styles';
 import React from 'react';
 import Nav from '@/components/Nav';
 import Box from '@mui/material/Box';
@@ -24,6 +25,8 @@ import Alert from '@mui/material/Alert';
 const page = () => {
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
+
+  const theme = useTheme();
 
   const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -70,7 +73,6 @@ const page = () => {
           flexDirection: { xs: 'column', md: 'row' },
           justifyContent: 'center',
           alignItems: 'center',
-
           height: '728px',
           width: '100%',
         }}
@@ -82,6 +84,7 @@ const page = () => {
             m: 0,
             p: 3,
             bgcolor: 'white',
+            border: '1px solid rgba(0, 0, 0, 0.12)',
             borderRadius: '16px',
             display: 'flex',
             flexDirection: 'column',
@@ -100,6 +103,8 @@ const page = () => {
               justifyContent: 'center',
               alignItems: 'center',
               width: '100%',
+
+              borderRadius: '16px',
             }}
           >
             <Stack
@@ -273,7 +278,6 @@ const page = () => {
             p: 0,
             bgcolor: '#f9f9f9',
             borderRadius: '16px',
-            border: 'var(--border-dark)',
           }}
         ></Container>
       </Box>
