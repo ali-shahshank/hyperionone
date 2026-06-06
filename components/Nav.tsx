@@ -61,8 +61,9 @@ export default function ResponsiveAppBar() {
               <Button
                 key={page.title}
                 sx={{
+                  fontSize:'16px',
                   textTransform: 'none',
-                  fontWeight: 500,
+                  fontWeight: 400,
                   color: 'black',
                   '&:hover': { bgcolor: 'rgba(0,0,0,0.03)' },
                 }}

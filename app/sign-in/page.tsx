@@ -79,8 +79,8 @@ const page = () => {
       >
         <Container
           sx={{
-            height: '100%',
-            width: { xs: '100%', md: '50%' },
+            height: 'auto',
+            width: { xs: '100%', md: 'auto' },
             m: 0,
             p: 3,
             bgcolor: 'white',
@@ -102,8 +102,8 @@ const page = () => {
               flexDirection: 'column',
               justifyContent: 'center',
               alignItems: 'center',
-              width: '100%',
-
+              width: '460px',
+              height: 'auto',
               borderRadius: '16px',
             }}
           >
@@ -270,16 +270,6 @@ const page = () => {
             </Typography>
           </Box>
         </Container>
-        <Container
-          sx={{
-            height: '100%',
-            width: '100%',
-            m: 0,
-            p: 0,
-            bgcolor: '#f9f9f9',
-            borderRadius: '16px',
-          }}
-        ></Container>
       </Box>
     </>
   );
