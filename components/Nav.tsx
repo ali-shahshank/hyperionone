@@ -32,12 +32,27 @@ export default function ResponsiveAppBar() {
   return (
     <AppBar
       position="static"
-      sx={{ bgcolor: 'transparent', boxShadow: 'none' }}
+      sx={{
+        bgcolor: 'transparent',
+        boxShadow: 'none',
+        p: 0,
+        m: 0,
+        backgroundColor: 'blue',
+      }}
     >
-      <Container maxWidth="xl">
+      <Container
+        maxWidth="xl"
+        sx={{ p: 0 }}
+      >
         <Toolbar
           disableGutters
-          sx={{ display: 'flex', justifyContent: 'space-between' }}
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            m: 0,
+            p: 0,
+            backgroundColor: 'orange',
+          }}
         >
           {/* Logo */}
           <Typography

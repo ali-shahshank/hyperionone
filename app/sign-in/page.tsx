@@ -66,7 +66,7 @@ const page = () => {
       <Nav />
       <Box
         sx={{
-          p: { xs: 2, md: 3 },
+          p: { xs: 2, sm: 2, md: 3 },
           m: 0,
           gap: 3,
           display: 'flex',
@@ -77,6 +77,7 @@ const page = () => {
           width: '100%',
         }}
       >
+        {/* Sign In Form */}
         <Container
           sx={{
             height: 'auto',
@@ -90,9 +91,9 @@ const page = () => {
             flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center',
+            boxShadow: 'rgba(0, 0, 0, 0.1) 0px 4px 12px',
           }}
         >
-          {/* Sign In Form */}
           <Box
             component="form"
             onSubmit={handleSubmit}
