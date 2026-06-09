@@ -80,7 +80,7 @@ const page = () => {
         <Container
           sx={{
             height: 'auto',
-            width: { xs: '100%', md: 'auto' },
+            width: { xs: '100%', md: '400px', lg: '460px' },
             m: 0,
             p: 3,
             bgcolor: 'white',
@@ -102,7 +102,7 @@ const page = () => {
               flexDirection: 'column',
               justifyContent: 'center',
               alignItems: 'center',
-              width: '460px',
+              width: '100%',
               height: 'auto',
               borderRadius: '16px',
             }}

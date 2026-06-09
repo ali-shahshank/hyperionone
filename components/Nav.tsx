@@ -50,6 +50,7 @@ export default function ResponsiveAppBar() {
               fontWeight: 500,
               color: 'black',
               textDecoration: 'none',
+              width: '202px',
             }}
           >
             Hyperion
@@ -61,7 +62,7 @@ export default function ResponsiveAppBar() {
               <Button
                 key={page.title}
                 sx={{
-                  fontSize:'16px',
+                  fontSize: '16px',
                   textTransform: 'none',
                   fontWeight: 400,
                   color: 'black',
@@ -74,7 +75,16 @@ export default function ResponsiveAppBar() {
           </Box>
 
           {/* Desktop Auth Buttons */}
-          <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 1 }}>
+          <Box
+            sx={{
+              display: {
+                xs: 'none',
+                md: 'flex',
+                width: '202px',
+              },
+              gap: 1,
+            }}
+          >
             <Button
               variant="text"
               sx={{
