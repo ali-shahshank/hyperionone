@@ -37,12 +37,11 @@ export default function ResponsiveAppBar() {
         boxShadow: 'none',
         p: 0,
         m: 0,
-        backgroundColor: 'blue',
       }}
     >
       <Container
         maxWidth="xl"
-        sx={{ p: 0 }}
+        sx={{ p: 0, m: 0 }}
       >
         <Toolbar
           disableGutters
@@ -51,7 +50,7 @@ export default function ResponsiveAppBar() {
             justifyContent: 'space-between',
             m: 0,
             p: 0,
-            backgroundColor: 'orange',
+            // backgroundColor: 'orange',
           }}
         >
           {/* Logo */}

@@ -1,7 +1,11 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  experimental: {
+    serverActions: {
+      allowedOrigins: ['organic-train-jg596q75pv92qv7j-3000.app.github.dev'],
+    },
+  },
 };
 
 export default nextConfig;
